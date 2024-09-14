@@ -1,0 +1,25 @@
+import zipfile
+import os
+import pandas as pd
+import matplotlib.pyplot as plt
+
+zip_file_path = '/content/API_SP.POP.TOTL_DS2_en_csv_v2_3401680.zip'
+extract_dir = 'extracted_files'
+
+with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+zip_ref.extractall(extract_dir)
+
+data_file_path = os.path.join(extract_dir, 'API_SP.POP.TOTL_DS2_en_csv_v2_3401680.csv')
+data = pd.read_csv(data_file_path, skiprows=4)
+
+data.columns
+
+population_2023 = data['2023'].dropna()
+
+plt.figure(figsize=(10, 6))
+plt.hist(population_2023, bins=30, color='skyblue', edgecolor='black')
+plt.title('Distribution of Total Population Across Countries in 2023')
+plt.xlabel('Population')
+plt.ylabel('Number of Countries')
+plt.grid(True)
+plt.show()
